@@ -16,6 +16,9 @@
    	 	<input type="text" name="title"/> 
     	<input type="submit" value="Get Film" />
   	</form>
+  	
+  	<p>Film info will show here:</p>
+  	<p>${film.title}</p>
 
 </body>
 

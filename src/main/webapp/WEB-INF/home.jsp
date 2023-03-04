@@ -13,7 +13,8 @@
 	<h1>${TESTFILM.title}</h1>
 	
 	<!-- Added this - Kenny -->
-	<a href="findFilmById.jsp">Find film by ID</a><br/>
+	<!-- this was right! just need to use do instead of jsp -->
+	<a href="findFilmById.do">Find film by ID</a><br/>
 	
 </body>
 </html>
