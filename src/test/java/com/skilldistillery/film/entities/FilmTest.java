@@ -62,14 +62,14 @@ class FilmTest {
 	
 		Film newFilm = filmDAO.createFilm(film);
 		
-		assertEquals(1001,newFilm.getId());
-		
+		assertEquals(1007,newFilm.getId());
 	}
 	
 	@Test
 	@DisplayName("Remove Film from database test...")
 	void test_deleteFilm() {
-		fail("Not yet implemented");
+		
+		assertEquals(true,filmDAO.deleteFilm(1006));
 	}
 	
 	@Test

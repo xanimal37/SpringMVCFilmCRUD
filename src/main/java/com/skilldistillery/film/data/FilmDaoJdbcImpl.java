@@ -226,8 +226,44 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 
 	@Override
 	public boolean deleteFilm(int filmId) {
-		// TODO Auto-generated method stub
-		return false;
+		//boolean to tell if we successfully deleted a film
+		boolean deleted = false;
+		
+		//SQL statement
+		String sql = "DELETE FROM film WHERE id = ?";
+		
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, user, pw);
+			conn.setAutoCommit(false); // Start transaction
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, filmId);
+			int uc = st.executeUpdate();
+			//only one film should have been added
+			if (uc == 1) {
+				// If we made it this far, no exception occurred.
+				conn.commit(); // Commit the transaction
+				deleted = true;
+			}
+			else {
+				conn.rollback();
+				deleted = false;
+			}
+		} catch (SQLException e) {
+			// Something went wrong.
+			System.err.println("Error during insert.");
+			e.printStackTrace();
+			// Need to roll back, which also throws SQLException.
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException e1) {
+					System.err.println("Error rolling back.");
+					e1.printStackTrace();
+				}
+			}
+		}
+		return deleted;
 	}
 
 	@Override

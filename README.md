@@ -17,4 +17,4 @@ This is a full stack project which consists of a front end where the user can lo
 ## Lessons Learned
 - can't serve jsp with links, if in WEB-INF must use servlet
 - JUnit tests very useful for testing DAO as methods are added
-
+- database auto-increment for primary key (id) doesn't fill 'empty' space it remembers what has been added i.e. if we add 1001 and then delete if, if another film is added it will get 1002.
