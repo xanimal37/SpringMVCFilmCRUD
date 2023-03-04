@@ -89,16 +89,77 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 		return actor;
 	}
 
+//	Added this - Kenny
 	@Override
 	public List<Actor> findActorsByFilmId(int filmId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Actor> actors = new ArrayList<>();
+
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pw);
+			String sql = "SELECT actor.* FROM actor JOIN film_actor ON actor.id = film_actor.actor_id "
+					+ "JOIN film ON film_actor.film_id = film.id WHERE film.id = ?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, filmId);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				int filmsId = rs.getInt("id");
+				String fName = rs.getString("first_name");
+				String lName = rs.getString("last_name");
+				Actor actor = new Actor(filmsId, fName, lName);
+				actors.add(actor);
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return actors;
+
 	}
 
+//	Added this - Kenny
 	@Override
 	public List<Film> findFilmByKeyWord(String keyWord) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Film> films = new ArrayList<>();
+		List<Actor> actors = new ArrayList<>();
+
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pw);
+			String sql = "SELECT film.*, language.name FROM film JOIN language ON film.language_id = language.id WHERE title LIKE ? OR description LIKE ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "%" + keyWord + "%");
+			stmt.setString(2, "%" + keyWord + "%");
+
+			stmt.setString(1, keyWord);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				// Here is our mapping of query columns to our object fields:
+				Film film = new Film(); // Create the object
+				film.setId(rs.getInt("id"));
+				film.setTitle(rs.getString("title"));
+				film.setDescription(rs.getString("description"));
+				film.setReleaseYear(rs.getInt("release_year"));
+				film.setLanguageId(rs.getInt("language_id"));
+				film.setLanguage(rs.getString("language.name"));
+				film.setLength(rs.getInt("length"));
+				film.setReplacementCost(rs.getDouble("replacement_cost"));
+				film.setRating(rs.getString("rating"));
+				film.setFeatures(rs.getString("special_features"));
+				actors = findActorsByFilmId(film.getId());
+				film.setActors(actors);
+				films.add(film);
+			}
+
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return films;
 	}
 
 	@Override

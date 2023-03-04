@@ -14,7 +14,19 @@
 	
 	<!-- Added this - Kenny -->
 	<!-- this was right! just need to use do instead of jsp -->
-	<a href="findFilmById.do">Find film by ID</a><br/>
+	<a href="findFilmById.do">Find film by Id</a><br/>
+	
+	<a href="findActorById.do">Find actor by Id</a><br/>
+	
+	<a href="findActorsByFilmId.do">Find actor by film Id</a><br/>
+	
+	<a href="findFilmByKeyWord.do">Find film by keyword</a><br/>
+	
+	<a href="createFilm.do">Add a film</a><br/>
+	
+	<a href="updateFilm.do">Update a film</a><br/>
+	
+	<a href="deleteFilm.do">Delete a film</a><br/>
 	
 </body>
 </html>
