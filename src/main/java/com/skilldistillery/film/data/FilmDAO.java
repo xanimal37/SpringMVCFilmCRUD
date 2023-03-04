@@ -3,6 +3,8 @@ package com.skilldistillery.film.data;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.ui.Model;
+
 import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
@@ -21,5 +23,6 @@ public interface FilmDAO {
 	boolean deleteFilm(int filmId);
 
 	Film updateFilm(int filmId, Film film);
+
 
 }
