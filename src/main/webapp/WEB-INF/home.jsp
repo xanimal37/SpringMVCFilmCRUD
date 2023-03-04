@@ -9,8 +9,11 @@
 </head>
 <body>
 
-	<h1>Welcome to Film Site</h1>
+	<h1>Welcome to Mr. CRUD's Film Site!</h1>
 	<h1>${TESTFILM.title}</h1>
+	
+	<!-- Added this - Kenny -->
+	<a href="findFilmById.jsp">Find film by ID</a><br/>
 	
 </body>
 </html>
