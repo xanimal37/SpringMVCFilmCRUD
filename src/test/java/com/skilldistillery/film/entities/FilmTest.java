@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -62,14 +63,14 @@ class FilmTest {
 	
 		Film newFilm = filmDAO.createFilm(film);
 		
-		assertEquals(1007,newFilm.getId());
+		assertEquals(1001,newFilm.getId());
 	}
 	
 	@Test
 	@DisplayName("Remove Film from database test...")
 	void test_deleteFilm() {
 		
-		assertEquals(true,filmDAO.deleteFilm(1006));
+		assertEquals(true,filmDAO.deleteFilm(1001));
 	}
 	
 	@Test
@@ -80,8 +81,11 @@ class FilmTest {
 	
 	@Test
 	@DisplayName("Find Film by keyword test...")
-	void test_findFilmByKeyword() {
-		fail("Not yet implemented");
+	void test_findFilmByKeyword() throws SQLException {
+		List<Film> result = filmDAO.findFilmByKeyWord("youth");
+		System.out.println(result.size());
+		
+		assertEquals(3,result.size());
 	}
 
 }

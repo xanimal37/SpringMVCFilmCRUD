@@ -125,18 +125,18 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 //	Added this - Kenny
 	@Override
 	public List<Film> findFilmByKeyWord(String keyWord) throws SQLException {
-		List<Film> films = new ArrayList<>();
-		List<Actor> actors = new ArrayList<>();
-
+		List<Film> films = new ArrayList<>(); //list to return
+		String sql = "SELECT * FROM film WHERE title LIKE ? OR description LIKE ?";
+		Connection conn = null;
+		
 		try {
-			Connection conn = DriverManager.getConnection(URL, user, pw);
-			String sql = "SELECT film.*, language.name FROM film JOIN language ON film.language_id = language.id WHERE title LIKE ? OR description LIKE ?";
+			conn = DriverManager.getConnection(URL, user, pw);
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, "%" + keyWord + "%");
-			stmt.setString(2, "%" + keyWord + "%");
-
-			stmt.setString(1, keyWord);
+			stmt.setString(1, "%"+keyWord + "%");
+			stmt.setString(2, "%"+keyWord + "%");
+	
 			ResultSet rs = stmt.executeQuery();
+			
 			while (rs.next()) {
 				// Here is our mapping of query columns to our object fields:
 				Film film = new Film(); // Create the object
@@ -145,12 +145,12 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 				film.setDescription(rs.getString("description"));
 				film.setReleaseYear(rs.getInt("release_year"));
 				film.setLanguageId(rs.getInt("language_id"));
-				film.setLanguage(rs.getString("language.name"));
 				film.setLength(rs.getInt("length"));
 				film.setReplacementCost(rs.getDouble("replacement_cost"));
 				film.setRating(rs.getString("rating"));
 				film.setFeatures(rs.getString("special_features"));
-				actors = findActorsByFilmId(film.getId());
+				//get the actors associated with the film
+				List<Actor> actors = findActorsByFilmId(film.getId());
 				film.setActors(actors);
 				films.add(film);
 			}
@@ -158,9 +158,11 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 			rs.close();
 			stmt.close();
 			conn.close();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return films;
 	}
 
@@ -196,7 +198,7 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 			ResultSet keys = st.getGeneratedKeys();
 			while (keys.next()) {
 		        filmID =  keys.getInt(1);
-		        System.out.println(filmID);
+		        System.out.println(filmID); //DEBUG
 		      }
 
 			//only one film should have been added
