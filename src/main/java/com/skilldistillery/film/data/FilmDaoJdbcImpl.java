@@ -209,6 +209,10 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 				//add the generated id to the film
 				film.setId(filmID);
 			}
+			else {
+				//make it null so a null object is returned and the jsp will display an appropriate message
+				film=null;
+			}
 		} catch (SQLException e) {
 			// Something went wrong.
 			System.err.println("Error during insert.");

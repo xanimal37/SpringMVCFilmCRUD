@@ -52,7 +52,7 @@ class FilmTest {
 		Film film = new Film();
 		film.setTitle("PUMPKIN WONDERLAND");
 		film.setDescription("A pumpkin struggles with garden boundaries and in the process finds love");
-		film.setFeatures("Trailers");
+		film.setFeatures("");
 		film.setLanguageId(1);
 		film.setLength(90);
 		film.setRating("PG");

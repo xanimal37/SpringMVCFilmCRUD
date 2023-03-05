@@ -12,12 +12,21 @@
  <form action="addFilm.do" method="POST">
  	<label for="film_title">Title:</label>
      <input type="text" name="film_title" /><br />
-     <label for="film_desc">Description:</label>
+     <label for="film_desc">Description: </label>
      <input type="text" name="film_desc" /><br />
-     <label for="film_year">Release Year:</label>
+     <label for="film_year">Release Year: </label>
      <input type="text" name="film_year"/><br />
-     <label for="film_year">Release Year:</label>
-     <input type="text" name="film_year"/><br />
+     <label for="film_length">Length (minutes): </label>
+     <input type="text" name="film_length"/><br />
+     <label for="film_repCost">Replacement Cost: </label>
+     <input type="text" name="film_repCost"/><br />
+     <label for="film_rate">Rental Rate: </label>
+     <input type="text" name="film_rate"/><br />
+     <label for="film_rentalDuration">Rental Duration (days): </label>
+     <input type="text" name="film_rentalDuration"/><br />
+     <label for="film_languageID">Language ID: </label>
+     <input type="text" name="film_languageID"/><br />
+     
      <!--  CHECKBOX for FEATURES (pick more than one) -->
      <!--  'Trailers','Commentaries','Deleted Scenes','Behind the Scenes' -->
      <p>Special Features:</p>
@@ -31,7 +40,7 @@
 	<label for="behind"> Behind the Scenes</label><br>
      <!--  RADIO BUTTONS for RATING (can only pick one) -->
      <p>Rating</p>
-     <input type="radio" id="g" name="rating" value="G">
+     <input type="radio" id="g" name="rating" value="G" checked="checked">
 	<label for="g">G</label><br>
 	<input type="radio" id="pg" name="rating" value="PG">
 	<label for="pg">PG</label><br>
@@ -44,6 +53,15 @@
      
      <input type="submit" value="Submit" /><br />
    </form>
+   <c:choose>
+   <c:when test = "${not empty film}">
+            <!--  display info of added film, including new auto id -->
+            <p>${film}</p>
+         </c:when>
+         <c:otherwise>
+            <p>No film added.</p>
+         </c:otherwise>
+   </c:choose>
 
 </body>
 </html>
