@@ -34,22 +34,25 @@ public class FilmController {
 		return "home";
 	}
 
+
+
 //	Added this - Kenny	
 	@GetMapping("findFilmById.do")
 //	@RequestMapping(path= "findFilmById.do", method = RequestMethod.GET)
 	public ModelAndView findFilmById(Integer filmId) throws SQLException {
 		ModelAndView mv = new ModelAndView();
+		mv.setViewName("findFilmById");
+		mv.addObject("film", filmDAO.findFilmById(0));
+		return mv;
 
 		// THIS WAS CAUSING AN ERROR BECAUSE WHEN IT WAS CALLED JUST TO LINK, THERE WAS
 		// NO DATA PASSED IN
-		// Film film = filmDAO.findFilmById(filmId);
-		// mv.addObject("film", film);
 
+//		Film film = filmDAO.findFilmById(filmId);
+//		mv.addObject("film", film);
 		// this is what VIEW RESOLVER in the Film-Site-servlet does for us. If we
 		// removed that, we'd have to
-		// write thi sout as "WEB-INF/findFilmById.jsp"
-		mv.setViewName("findFilmById");
-		return mv;
+		// write this out as "WEB-INF/findFilmById.jsp"
 	}
 
 //	Added this - Kenny	
@@ -77,16 +80,16 @@ public class FilmController {
 	}
 
 //	Added this - Kenny	
-	@GetMapping("createFilm.do")
+	@PostMapping("createFilm.do")
 	public ModelAndView createFilm(Film film, RedirectAttributes redir) throws SQLException {
 		ModelAndView mv = new ModelAndView();
 		redir.addFlashAttribute("film", film);
-		mv.setViewName("createFilm");
+		mv.setViewName("redirect:createFilm");
 		return mv;
 	}
 
 //	Added this - Kenny	
-	@GetMapping("updateFilm.do")
+	@PostMapping("updateFilm.do")
 	public ModelAndView updateFilm(Integer filmId, Film film) throws SQLException {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("updateFilm");
@@ -94,8 +97,9 @@ public class FilmController {
 	}
 
 //	Added this - Kenny	
-	@GetMapping("deleteFilm.do")
+	@PostMapping("deleteFilm.do")
 	public ModelAndView deleteFilm(Integer filmId) throws SQLException {
+//		boolean filmedDeleted = filmDAO.deleteFilm(filmDAO.findFilmById(filmId));
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("deleteFilm");
 		return mv;
