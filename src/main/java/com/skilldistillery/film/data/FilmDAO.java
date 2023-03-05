@@ -20,7 +20,8 @@ public interface FilmDAO {
 
 	Film createFilm(Film film);
 
-	Film updateFilm(int filmId, Film film);
+//	Changed from Film to boolean.
+	boolean updateFilm(int filmId, Film film);
 	
 	boolean deleteFilm(int filmId);
 
