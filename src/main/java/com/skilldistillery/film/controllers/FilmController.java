@@ -41,6 +41,12 @@ public class FilmController {
 	}
 	
 	//this one just loads page - has no parameters
+	@GetMapping("addFilm.do")
+	public String addFilm(Model model) throws SQLException {
+		return "addFilm";
+	}
+	
+	//this one just loads page - has no parameters
 		@GetMapping("findFilmByKeyword.do")
 		public String loadKeywordSearch(Model model) throws SQLException {
 			return "findFilmByKeyword";
