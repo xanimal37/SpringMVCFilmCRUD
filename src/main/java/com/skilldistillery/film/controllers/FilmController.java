@@ -72,7 +72,32 @@ public class FilmController {
 			return mv;
 		}
 	
-
+		//adds a film
+		@RequestMapping(path="addFilm.do",method=RequestMethod.POST)
+		public ModelAndView newFilm(
+				@RequestParam("film_title") String title, 
+				@RequestParam("film_desc") String desc,
+				@RequestParam("film_year") int year,
+				@RequestParam("film_length") int length) throws SQLException {
+			//doing this the tedious way first
+			Film film = new Film();
+			film.setTitle(title);
+			film.setDescription(desc);
+			film.setFeatures(null);
+			film.setLanguageId(0);
+			film.setRating(null);
+			film.setReleaseYear(0);
+			film.setLength(null);
+			film.setRentalDuration(0);
+			film.setRentalRate(0);
+			film.setReplacementCost(0);
+			//add film to database
+			filmDAO.createFilm(film);
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("addFilm");
+			
+			return mv;
+		}
 
 //	Added this - Kenny	
 	@GetMapping("findActorById.do")
@@ -87,23 +112,6 @@ public class FilmController {
 	public ModelAndView findActorsByFilmId(Integer filmId) throws SQLException {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("findFilmById");
-		return mv;
-	}
-
-//	Added this - Kenny	
-	@GetMapping("findFilmByKeyWord.do")
-	public ModelAndView findFilmByKeyWord(String keyWord) throws SQLException {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("findFilmByKeyWord");
-		return mv;
-	}
-
-//	Added this - Kenny	
-	@GetMapping("createFilm.do")
-	public ModelAndView createFilm(Film film, RedirectAttributes redir) throws SQLException {
-		ModelAndView mv = new ModelAndView();
-		redir.addFlashAttribute("film", film);
-		mv.setViewName("createFilm");
 		return mv;
 	}
 

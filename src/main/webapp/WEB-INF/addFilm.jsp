@@ -10,12 +10,14 @@
 <body>
 <h2>Add a Film</h2>
  <form action="addFilm.do" method="POST">
-     <input type="text" name="film_title" />
-     <label for="film_title">Title:</label><br />
-     <input type="text" name="film_desc" />
-     <label for="film_desc">Description:</label><br />
-     <input type="text" name="film_year"/>
-     <lable for="film_year">Release Year:</lable><br />
+ 	<label for="film_title">Title:</label>
+     <input type="text" name="film_title" /><br />
+     <label for="film_desc">Description:</label>
+     <input type="text" name="film_desc" /><br />
+     <label for="film_year">Release Year:</label>
+     <input type="text" name="film_year"/><br />
+     <label for="film_year">Release Year:</label>
+     <input type="text" name="film_year"/><br />
      <!--  CHECKBOX for FEATURES (pick more than one) -->
      <!--  'Trailers','Commentaries','Deleted Scenes','Behind the Scenes' -->
      <p>Special Features:</p>
