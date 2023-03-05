@@ -15,6 +15,7 @@
 	<li><a href="findFilmById.do">Find film by ID</a></li>
 	<li><a href="findFilmByKeyword.do">Find film(s) by keyword</a></li>
 	<li><a href="addFilm.do">Add a Film</a></li>
+	<li><a href="updateFilm.do">Update a Film</a></li>
 	
 	</ul>
 	

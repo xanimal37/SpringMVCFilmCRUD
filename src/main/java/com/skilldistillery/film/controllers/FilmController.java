@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -115,13 +117,28 @@ public class FilmController {
 		return mv;
 	}
 
-//	Added this - Kenny	
-	@GetMapping("updateFilm.do")
-	public ModelAndView updateFilm(Integer filmId, Film film) throws SQLException {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("updateFilm");
-		return mv;
-	}
+//	Added this - Kenny		
+	  @GetMapping("updateFilm.do")
+	    public ModelAndView updateFilm(@RequestParam("filmId") Integer filmId) throws SQLException {
+	        ModelAndView mv = new ModelAndView();
+	        Film film = filmDAO.findFilmById(filmId);
+	        mv.addObject("film", film);
+	        mv.setViewName("updateFilm");
+	        return mv;
+	    }
+
+	    @PostMapping("updateFilm.do")
+	    public ModelAndView updateFilm(@ModelAttribute("film") Film film) {
+	        ModelAndView mv = new ModelAndView();
+	        boolean success = filmDAO.updateFilm(film.getId(), film);
+	        if (success) {
+	            mv.setViewName("updateFilmSuccess");
+	        } else {
+	            mv.addObject("errorMessage", "Unable to update film.");
+	            mv.setViewName("updateFilm");
+	        }
+	        return mv;
+	    }
 
 //	Added this - Kenny	
 	@GetMapping("deleteFilm.do")
