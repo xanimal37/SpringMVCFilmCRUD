@@ -166,70 +166,6 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 		return films;
 	}
 
-	// this creates and adds a film from a Film object
-	// film is a copy but we are returning it so should be ok
-	@Override
-	public Film createFilm(Film film) {
-		int filmID = 0; // this will get updated with the key when the film is added
-		String sql = null;
-		if (film != null) {
-			// did it this way to make the sql statement easier
-			String title = film.getTitle();
-			String desc = film.getDescription();
-			int year = film.getReleaseYear();
-			int langID = film.getLanguageId();
-			int duration = film.getRentalDuration();
-			double rate = film.getRentalRate();
-			int length = film.getLength();
-			double cost = film.getReplacementCost();
-			String rating = film.getRating();
-			String features = film.getFeatures();
-
-			sql = "INSERT INTO FILM (title, description,release_year,language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) "
-					+ "VALUES('" + title + "','" + desc + "','" + year + "','" + langID + "','" + duration + "','"
-					+ rate + "','" + length + "','" + cost + "','" + rating + "','" + features + "')";
-		}
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(URL, user, pw);
-			conn.setAutoCommit(false); // Start transaction
-			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			int uc = st.executeUpdate();
-			ResultSet keys = st.getGeneratedKeys();
-			while (keys.next()) {
-				filmID = keys.getInt(1);
-				System.out.println(filmID); // DEBUG
-			}
-
-			// only one film should have been added
-			if (uc == 1) {
-				// If we made it this far, no exception occurred.
-				conn.commit(); // Commit the transaction
-
-				// add the generated id to the film
-				film.setId(filmID);
-			}
-			else {
-				//make it null so a null object is returned and the jsp will display an appropriate message
-				film=null;
-			}
-		} catch (SQLException e) {
-			// Something went wrong.
-			System.err.println("Error during insert.");
-			e.printStackTrace();
-			// Need to roll back, which also throws SQLException.
-			if (conn != null) {
-				try {
-					conn.rollback();
-				} catch (SQLException e1) {
-					System.err.println("Error rolling back.");
-					e1.printStackTrace();
-				}
-			}
-		}
-		return film;
-	}
-
 	@Override
 	public boolean deleteFilm(int filmId) {
 		// boolean to tell if we successfully deleted a film
@@ -320,5 +256,70 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 	    }
 	    return true;
 	}
+	
+	// this creates and adds a film from a Film object
+		//film is a copy but we are returning it so should be ok
+		@Override
+		public Film createFilm(Film film) {
+			int filmID=0; //this will get updated with the key when the film is added
+			String sql = null;
+			if (film != null) {
+				//did it this way to make the sql statement easier
+				String title = film.getTitle();
+				String desc = film.getDescription();
+				int year = film.getReleaseYear();
+				int langID = film.getLanguageId();
+				int duration = film.getRentalDuration();
+				double rate = film.getRentalRate();
+				int length = film.getLength();
+				double cost = film.getReplacementCost();
+				String rating =film.getRating();
+				String features = film.getFeatures();
+					
+				sql = "INSERT INTO FILM (title, description,release_year,language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) " + 
+						"VALUES('"+title + "','" + desc + "','" + year + "','" + langID +"','"+ duration +"','"+ rate +"','"+ length +"','"+
+						cost +"','"+ rating +"','"+ features +"')";
+			}
+			Connection conn = null;
+			try {
+				conn = DriverManager.getConnection(URL, user, pw);
+				conn.setAutoCommit(false); // Start transaction
+				PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+				int uc = st.executeUpdate();
+				ResultSet keys = st.getGeneratedKeys();
+				while (keys.next()) {
+			        filmID =  keys.getInt(1);
+			        System.out.println(filmID); //DEBUG
+			      }
+
+				//only one film should have been added
+				if (uc == 1) {
+					// If we made it this far, no exception occurred.
+					conn.commit(); // Commit the transaction
+					
+					//add the generated id to the film
+					film.setId(filmID);
+				}
+				else {
+					//make it null so a null object is returned and the jsp will display an appropriate message
+					film=null;
+				}
+			} catch (SQLException e) {
+				// Something went wrong.
+				System.err.println("Error during insert.");
+				e.printStackTrace();
+				// Need to roll back, which also throws SQLException.
+				if (conn != null) {
+					try {
+						conn.rollback();
+					} catch (SQLException e1) {
+						System.err.println("Error rolling back.");
+						e1.printStackTrace();
+					}
+				}
+			}
+			return film;
+		}
+
 
 }

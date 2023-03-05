@@ -144,5 +144,61 @@ public class FilmController {
 		mv.setViewName("deleteFilm");
 		return mv;
 	}
+	
+	// adds a film
+		@RequestMapping(path = "addFilm.do", method = RequestMethod.POST)
+		public ModelAndView newFilm(@RequestParam("film_title") String title, @RequestParam("film_desc") String desc,
+				@RequestParam("film_year") int year, 
+				@RequestParam("film_length") int length,
+				@RequestParam("film_languageID") int langID, 
+				@RequestParam("film_rentalDuration") int duration,
+				@RequestParam("film_rate") double rate, 
+				@RequestParam("film_repCost") double repCost,
+				// ratings is a radio button - can be only one
+				@RequestParam("rating") String rating,
+				// features are checkboxes - can have more than one
+				@RequestParam(name="trailers",defaultValue ="") String trailers, 
+				@RequestParam(name="commentaries",defaultValue ="") String commentaries,
+				@RequestParam(name="deleted",defaultValue ="") String deleted, 
+				@RequestParam(name="behind",defaultValue ="") String behind) throws SQLException { 
+
+			// features, since there is more than one
+			// an empty string is ok but null is not
+			StringBuilder features = new StringBuilder();
+			String[] possibleFeatures = { trailers, commentaries, deleted, behind };
+			for (String f : possibleFeatures) {
+				if (f != null && f.length()>0) {
+					features.append("," + f);
+				}
+			}
+			// if there something in the string, remove the first character, whihc will be a
+			// comma
+			if (features.length() > 0) {
+				features.delete(0, 1);
+			}
+			System.out.println(features);
+
+			// doing this the tedious way
+			Film film = new Film();
+			film.setTitle(title);
+			film.setDescription(desc);
+			film.setFeatures(features.toString());
+			film.setLanguageId(langID);
+			film.setRating(rating);
+			film.setReleaseYear(year);
+			film.setLength(length);
+			film.setRentalDuration(duration);
+			film.setRentalRate(rate);
+			film.setReplacementCost(repCost);
+
+			// add film to database
+			Film newFilm = filmDAO.createFilm(film);
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("film", newFilm);
+			mv.setViewName("addFilm");
+
+			return mv;
+		}
+
 
 }
