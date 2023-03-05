@@ -10,11 +10,14 @@
 <body>
 
 	<h1>Welcome to Mr. CRUD's Film Site!</h1>
-	<h1>${TESTFILM.title}</h1>
-
-	<!-- Added this - Kenny -->
-	<!-- this was right! just need to use do instead of jsp -->
-	<a href="findFilmById.do">Find film by Id</a>
+	<p>What would you like to do?</p>
+	<ul>
+	<li><a href="findFilmById.do">Find film by ID</a></li>
+	<li><a href="findFilmByKeyword.do">Find film(s) by keyword</a></li>
+	<li>Add a Film</li>
+	
+	</ul>
+	
 	
 
 </body>

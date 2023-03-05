@@ -1,12 +1,12 @@
 package com.skilldistillery.film.controllers;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,24 +33,40 @@ public class FilmController {
 //		model.addAttribute("TESTFILM", TEST);	
 		return "home";
 	}
-
-//	Added this - Kenny	
+	
+	//this one just loads page - has no parameters
 	@GetMapping("findFilmById.do")
-//	@RequestMapping(path= "findFilmById.do", method = RequestMethod.GET)
-	public ModelAndView findFilmById(Integer filmId) throws SQLException {
+	public String loadIDSearch(Model model) throws SQLException {
+		return "findFilmById";
+	}
+	
+	//this one just loads page - has no parameters
+		@GetMapping("findFilmByKeyword.do")
+		public String loadKeywordSearch(Model model) throws SQLException {
+			return "findFilmByKeyword";
+		}
+
+	//this method is run if searching for a film by ID
+	@RequestMapping(path = "findFilmById.do", params = "id",method = RequestMethod.GET)
+	public ModelAndView findFilmById(@RequestParam("id") int id) throws SQLException {
 		ModelAndView mv = new ModelAndView();
-
-		// THIS WAS CAUSING AN ERROR BECAUSE WHEN IT WAS CALLED JUST TO LINK, THERE WAS
-		// NO DATA PASSED IN
-		// Film film = filmDAO.findFilmById(filmId);
-		// mv.addObject("film", film);
-
-		// this is what VIEW RESOLVER in the Film-Site-servlet does for us. If we
-		// removed that, we'd have to
-		// write thi sout as "WEB-INF/findFilmById.jsp"
+		Film film = filmDAO.findFilmById(id);
+		mv.addObject("film", film);
 		mv.setViewName("findFilmById");
 		return mv;
 	}
+	
+	//this method is run if searching for a film by keyword
+		@RequestMapping(path = "findFilmByKeyword.do", params = "keyword",method = RequestMethod.GET)
+		public ModelAndView findFilmById(@RequestParam("keyword") String keyword) throws SQLException {
+			ModelAndView mv = new ModelAndView();
+			List<Film> films = filmDAO.findFilmByKeyWord(keyword);
+			mv.addObject("films", films);
+			mv.setViewName("findFilmByKeyword");
+			return mv;
+		}
+	
+
 
 //	Added this - Kenny	
 	@GetMapping("findActorById.do")
