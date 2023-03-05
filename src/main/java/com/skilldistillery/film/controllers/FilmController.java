@@ -1,6 +1,7 @@
 package com.skilldistillery.film.controllers;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,15 +35,28 @@ public class FilmController {
 		return "home";
 	}
 
-
-
-//	Added this - Kenny	
 	@GetMapping("findFilmById.do")
-//	@RequestMapping(path= "findFilmById.do", method = RequestMethod.GET)
-	public ModelAndView findFilmById(Integer filmId) throws SQLException {
+	public String loadIDSearch(Model model) throws SQLException {
+		return "findFilmById";
+	}
+	
+	//this one just loads page - has no parameters
+	@GetMapping("addFilm.do")
+	public String addFilm(Model model) throws SQLException {
+		return "addFilm";
+	}
+	
+	//this one just loads page - has no parameters
+		@GetMapping("findFilmByKeyword.do")
+		public String loadKeywordSearch(Model model) throws SQLException {
+			return "findFilmByKeyword";
+		}
+
+	//this method is run if searching for a film by ID
+	@RequestMapping(path = "findFilmById.do", params = "id",method = RequestMethod.GET)
+	public ModelAndView findFilmById(@RequestParam("id") int id) throws SQLException {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("findFilmById");
-		mv.addObject("film", filmDAO.findFilmById(0));
 		return mv;
 
 		// THIS WAS CAUSING AN ERROR BECAUSE WHEN IT WAS CALLED JUST TO LINK, THERE WAS
@@ -53,7 +67,45 @@ public class FilmController {
 		// this is what VIEW RESOLVER in the Film-Site-servlet does for us. If we
 		// removed that, we'd have to
 		// write this out as "WEB-INF/findFilmById.jsp"
+
 	}
+	
+	//this method is run if searching for a film by keyword
+		@RequestMapping(path = "findFilmByKeyword.do", params = "keyword",method = RequestMethod.GET)
+		public ModelAndView findFilmById(@RequestParam("keyword") String keyword) throws SQLException {
+			ModelAndView mv = new ModelAndView();
+			List<Film> films = filmDAO.findFilmByKeyWord(keyword);
+			mv.addObject("films", films);
+			mv.setViewName("findFilmByKeyword");
+			return mv;
+		}
+	
+		//adds a film
+		@RequestMapping(path="addFilm.do",method=RequestMethod.POST)
+		public ModelAndView newFilm(
+				@RequestParam("film_title") String title, 
+				@RequestParam("film_desc") String desc,
+				@RequestParam("film_year") int year,
+				@RequestParam("film_length") int length) throws SQLException {
+			//doing this the tedious way first
+			Film film = new Film();
+			film.setTitle(title);
+			film.setDescription(desc);
+			film.setFeatures(null);
+			film.setLanguageId(0);
+			film.setRating(null);
+			film.setReleaseYear(0);
+			film.setLength(null);
+			film.setRentalDuration(0);
+			film.setRentalRate(0);
+			film.setReplacementCost(0);
+			//add film to database
+			filmDAO.createFilm(film);
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("addFilm");
+			
+			return mv;
+		}
 
 //	Added this - Kenny	
 	@GetMapping("findActorById.do")
@@ -90,6 +142,9 @@ public class FilmController {
 
 //	Added this - Kenny	
 	@PostMapping("updateFilm.do")
+
+	@GetMapping("updateFilm.do")
+
 	public ModelAndView updateFilm(Integer filmId, Film film) throws SQLException {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("updateFilm");
