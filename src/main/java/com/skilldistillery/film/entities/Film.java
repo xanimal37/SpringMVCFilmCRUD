@@ -156,14 +156,14 @@ public class Film {
 		filmStr.append(getReleaseYear() + " | ");
 		filmStr.append(getRating() + " | ");
 		filmStr.append(getDescription() + " | ");
-		filmStr.append(getLanguage() + " | ");
+		//filmStr.append(getLanguage() + " | ");
 
 		// now add the list of actors
-		filmStr.append("\n*** Starring: ***\n");
-
-			for (Actor actor : actors) {
-				filmStr.append(actor + "\n");
-			}
+//		filmStr.append("\n*** Starring: ***\n");
+//
+//			for (Actor actor : actors) {
+//				filmStr.append(actor + "\n");
+//			}
 
 		return filmStr.toString();
 	}
