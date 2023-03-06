@@ -91,15 +91,6 @@ public class FilmController {
 	}
 
 //	Added this - Kenny		
-	@GetMapping("updateFilm.do")
-	public ModelAndView updateFilm(@RequestParam("filmId") Integer filmId) throws SQLException {
-		ModelAndView mv = new ModelAndView();
-		Film film = filmDAO.findFilmById(filmId);
-		mv.addObject("film", film);
-		mv.setViewName("updateFilm");
-		return mv;
-	}
-
 	@PostMapping("updateFilm.do")
 	public ModelAndView updateFilm(@ModelAttribute("film") Film film) {
 		ModelAndView mv = new ModelAndView();
