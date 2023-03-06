@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Mr. CRUD - Add a Film</title>
+<title>Mr. CRUD - Update a Film</title>
 </head>
 <body>
-<h2>Add a Film</h2>
- <form action="addFilm.do" method="POST">
+<h2>Update a Film</h2>
+ <form action="updateFilm.do" method="POST">
  	<label for="film_title">Title:</label>
      <input type="text" name="film_title" /><br />
      <label for="film_desc">Description: </label>

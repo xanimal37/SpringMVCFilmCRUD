@@ -74,30 +74,6 @@ public class FilmController {
 		return mv;
 	}
 
-	// adds a film
-	@RequestMapping(path = "addFilm.do", method = RequestMethod.POST)
-	public ModelAndView newFilm(@RequestParam("film_title") String title, @RequestParam("film_desc") String desc,
-			@RequestParam("film_year") int year, @RequestParam("film_length") int length) throws SQLException {
-		// doing this the tedious way first
-		Film film = new Film();
-		film.setTitle(title);
-		film.setDescription(desc);
-		film.setFeatures(null);
-		film.setLanguageId(0);
-		film.setRating(null);
-		film.setReleaseYear(0);
-		film.setLength(null);
-		film.setRentalDuration(0);
-		film.setRentalRate(0);
-		film.setReplacementCost(0);
-		// add film to database
-		filmDAO.createFilm(film);
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("addFilm");
-
-		return mv;
-	}
-
 //	Added this - Kenny	
 	@GetMapping("findActorById.do")
 	public ModelAndView findActorById(Integer actorId) throws SQLException {
