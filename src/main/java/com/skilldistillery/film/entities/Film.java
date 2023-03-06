@@ -153,17 +153,23 @@ public class Film {
 	public String toString() {
 		StringBuilder filmStr = new StringBuilder();
 		filmStr.append(getTitle() + " | ");
-		filmStr.append(getReleaseYear() + " | ");
-		filmStr.append(getRating() + " | ");
 		filmStr.append(getDescription() + " | ");
-		//filmStr.append(getLanguage() + " | ");
-
+		filmStr.append(getReleaseYear() + " | ");
+		filmStr.append(getLanguageId() + " | ");
+		filmStr.append(getLength() + " | ");
+		filmStr.append(getReplacementCost() + " | ");
+		filmStr.append(getRentalDuration() + " | ");
+		filmStr.append(getRating() + " | ");
+		filmStr.append(getFeatures() + " | ");
+		filmStr.append(getRentalRate() + " | ");
+		filmStr.append(getLanguage() + " | ");
+		
 		// now add the list of actors
-//		filmStr.append("\n*** Starring: ***\n");
-//
-//			for (Actor actor : actors) {
-//				filmStr.append(actor + "\n");
-//			}
+		filmStr.append("\n*** Starring: ***\n");
+
+			for (Actor actor : actors) {
+				filmStr.append(actor + "\n");
+			}
 
 		return filmStr.toString();
 	}
