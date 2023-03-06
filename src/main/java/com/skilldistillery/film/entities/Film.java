@@ -21,6 +21,7 @@ public class Film {
 
 	// constructors
 	public Film() {
+		actors = new ArrayList<Actor>();
 	}
 
 	public Film(int id, String title, String description, int releaseYear, int languageId, Integer length,
@@ -39,6 +40,7 @@ public class Film {
 		this.features = features;
 		this.rentalRate = rentalRate;
 		this.language = language;
+		this.actors = new ArrayList<Actor>();
 	}
 
 	// getters and setters
@@ -163,13 +165,15 @@ public class Film {
 		filmStr.append(getFeatures() + " | ");
 		filmStr.append(getRentalRate() + " | ");
 		filmStr.append(getLanguage() + " | ");
-		
+
 		// now add the list of actors
 		filmStr.append("\n*** Starring: ***\n");
 
-			for (Actor actor : actors) {
+		for (Actor actor : actors) {
+			if (actor != null) {
 				filmStr.append(actor + "\n");
 			}
+		}
 
 		return filmStr.toString();
 	}

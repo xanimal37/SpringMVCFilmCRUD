@@ -24,7 +24,7 @@
 			<ul>
 
 				<c:forEach var="film" items="${films}">
-					<li><c:out value="${film}" /></li>
+					<li><a href="findFilmById.do?id=${film.id}"><c:out value="${film}" /></a></li>
 				</c:forEach>
 			</ul>
 		</c:otherwise>

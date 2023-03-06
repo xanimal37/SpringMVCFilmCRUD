@@ -55,7 +55,7 @@ public class FilmController {
 	}
 
 	// this method is run if searching for a film by ID
-	@RequestMapping(path = "findFilmById.do", params = "id", method = RequestMethod.GET)
+	@RequestMapping(path = "findFilmById.do", params = "id",method = RequestMethod.GET)
 	public ModelAndView findFilmById(@RequestParam("id") int id) throws SQLException {
 		ModelAndView mv = new ModelAndView();
 		Film film = filmDAO.findFilmById(id);
@@ -147,14 +147,6 @@ public ModelAndView deleteFilm(@RequestParam("id") int id) throws SQLException {
 	return mv;
 }
 
-//	Added this - Kenny	
-	@GetMapping("deleteFilm.do")
-	public ModelAndView deleteFilm(Integer filmId) throws SQLException {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("deleteFilm");
-		return mv;
-	}
-	
 	// adds a film
 		@RequestMapping(path = "addFilm.do", method = RequestMethod.POST)
 		public ModelAndView newFilm(@RequestParam("film_title") String title, @RequestParam("film_desc") String desc,
