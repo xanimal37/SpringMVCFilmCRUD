@@ -8,7 +8,9 @@
 <title>Mr. CRUD - Add a Film</title>
 </head>
 <body>
-<h2>Add a Film</h2>
+<h1>Add a Film</h1>
+<a href="home.do">return to Mr. Crud's home</a>
+<br>
  <form action="addFilm.do" method="POST">
  	<label for="film_title">Title:</label>
      <input type="text" name="film_title" /><br />

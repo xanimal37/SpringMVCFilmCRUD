@@ -9,6 +9,7 @@
 </head>
 <body>
 	<h1>Find Film by ID</h1>
+	<a href="home.do">return to Mr. Crud's home</a>
 	<h2>Search</h2>
 	<form action="findFilmById.do" method="GET">
 		<input type="text" name="id" /><br /> <label for="id">Film

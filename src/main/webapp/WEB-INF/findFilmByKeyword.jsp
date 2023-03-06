@@ -9,6 +9,7 @@
 </head>
 <body>
 	<h1>Find Film(s) by Keyword</h1>
+	<a href="home.do">return to Mr. Crud's home</a>
 	<h2>Search</h2>
 	<form action="findFilmByKeyword.do" method="GET">
 		<input type="text" name="keyword" /><br /> <label for="keyword">KEYWORD:</label>
