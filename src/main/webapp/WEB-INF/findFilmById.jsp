@@ -37,7 +37,12 @@
      <input type="text" name="film_rate" size="10" value="${film.rentalRate}"/><br />
      <label for="film_rentalDuration">Rental Duration (days): </label>
      <input type="text" name="film_rentalDuration" size="6" value="${film.rentalDuration}"><br />
-     
+     <p>** Starring **</p>
+     <ul>
+     <c:forEach var="actor" items="${film.actors}">
+     	<li>${actor}</li>
+     	</c:forEach>
+     </ul>
      <p>For special features, enter [Trailers, Commentaries, Behind the Scenes, Deleted Scenes] separated by commas with no spaces.</p>
      <label for="film_features">Features: </label>
      <input type="text" name="film_features" size="40" value="${film.features}"/><br />
