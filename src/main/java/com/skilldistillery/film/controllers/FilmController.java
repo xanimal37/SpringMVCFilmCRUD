@@ -91,11 +91,12 @@ public class FilmController {
 	}
 
 //	Added this - Kenny		
-	@PostMapping("updateFilm.do")
+
+	@RequestMapping(path = "updateFilm.do", method = RequestMethod.GET)
 	public ModelAndView updateFilm(@ModelAttribute("film") Film film) {
 		ModelAndView mv = new ModelAndView();
-		boolean success = filmDAO.updateFilm(film.getId(), film);
-		if (success) {
+		Film success = filmDAO.updateFilm(film.getId(), film);
+		if (success != null) {
 			mv.setViewName("updateFilmSuccess");
 		} else {
 			mv.addObject("errorMessage", "Unable to update film.");
