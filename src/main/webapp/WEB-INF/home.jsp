@@ -12,13 +12,10 @@
 	<h1>Welcome to Mr. CRUD's Film Site!</h1>
 	<p>What would you like to do?</p>
 	<ul>
-	<li><a href="findFilmById.do">Find film by ID</a></li>
+	<li><a href="findFilmById.do">Find film by ID (Update or Delete)</a></li>
 	<li><a href="findFilmByKeyword.do">Find film(s) by keyword</a></li>
 	<li><a href="addFilm.do">Add a Film</a></li>
-	<li><a href="updateFilm.do">Update a Film</a></li>
-	
 	</ul>
-	
 
 </body>
 </html>

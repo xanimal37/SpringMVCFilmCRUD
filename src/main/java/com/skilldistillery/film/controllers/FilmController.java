@@ -90,20 +90,62 @@ public class FilmController {
 		return mv;
 	}
 
-//	Added this - Kenny		
+	//this updates current film
+@RequestMapping(path="findFilmById.do", method=RequestMethod.POST, params="update")
+public ModelAndView updateFilm(@RequestParam("id") int id,
+		@RequestParam("film_title") String title,
+		@RequestParam("film_desc") String desc,
+		@RequestParam("film_rating") String rating,
+		@RequestParam("film_features") String features,
+		@RequestParam("film_year") int year,
+		@RequestParam("film_length") int length,
+		@RequestParam("film_languageID") int langID,
+		@RequestParam("film_rentalDuration") Integer duration,
+		@RequestParam("film_rate") Double rate, 
+		@RequestParam("film_repCost") Double repCost) throws SQLException {
 
-	@RequestMapping(path = "updateFilm.do", method = RequestMethod.GET)
-	public ModelAndView updateFilm(@ModelAttribute("film") Film film) {
-		ModelAndView mv = new ModelAndView();
-		Film success = filmDAO.updateFilm(film.getId(), film);
-		if (success != null) {
-			mv.setViewName("updateFilmSuccess");
-		} else {
-			mv.addObject("errorMessage", "Unable to update film.");
-			mv.setViewName("updateFilm");
-		}
-		return mv;
+//	//film to update
+	Film film = new Film();
+	film.setTitle(title);
+	film.setDescription(desc);
+	film.setReleaseYear(year);
+	film.setLanguageId(langID);
+	film.setLength(length);
+	film.setRentalDuration(duration);
+	film.setReplacementCost(repCost);
+	film.setRating(rating);
+	film.setFeatures(features);
+	film.setRentalRate(rate);
+	//do, result
+	ModelAndView mv = new ModelAndView();
+	String result=null;
+
+	Film updatedfilm = filmDAO.updateFilm(id, film);
+	if(updatedfilm!=null) {
+		result = "FILM UPDATED";
 	}
+	else {
+		result = "FAILED UPDATE";
+	}
+	mv.addObject("message", result);
+	return mv;
+}
+
+//this deletes current film
+@RequestMapping(path="findFilmById.do", method=RequestMethod.POST, params="delete")
+public ModelAndView deleteFilm(@RequestParam("id") int id) throws SQLException {
+	ModelAndView mv = new ModelAndView();
+	boolean wasDeleted = filmDAO.deleteFilm(id);
+	String result=null;
+	if(wasDeleted) {
+		result = "FILM DELETED";
+	}
+	else {
+		result = "FAILED DELETION";
+	}
+	mv.addObject("message", result);
+	return mv;
+}
 
 //	Added this - Kenny	
 	@GetMapping("deleteFilm.do")
@@ -170,3 +212,10 @@ public class FilmController {
 
 
 }
+
+
+//
+//
+//
+//
+
