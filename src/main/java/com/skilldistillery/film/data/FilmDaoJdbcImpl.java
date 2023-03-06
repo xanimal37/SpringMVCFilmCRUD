@@ -208,14 +208,17 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 	}
 
 	@Override
-	public boolean updateFilm(int filmId, Film updatedFilm) {
+	public Film updateFilm(int filmId, Film updatedFilm) {
+		Film filmToReturn = null;
+		String sql = "UPDATE film SET title = ?, description = ?, release_year = ?, language_id = ?, "
+				+ "rental_duration = ?, rental_rate = ?, length = ?, replacement_cost = ?, "
+				+ "rating = ?, special_features = ? WHERE id = ?;";
 		Connection conn = null;
+		
 		try {
 			conn = DriverManager.getConnection(URL, user, pw);
 			conn.setAutoCommit(false);
-			String sql = "UPDATE film SET title = ?, description = ?, release_year = ?, language_id = ?, "
-					+ "rental_duration = ?, rental_rate = ?, length = ?, replacement_cost = ?, "
-					+ "rating = ?, special_features = ? WHERE id = ?;";
+			
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, updatedFilm.getTitle());
 			stmt.setString(2, updatedFilm.getDescription());
@@ -230,19 +233,25 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 			stmt.setInt(11, filmId);
 			int updateCount = stmt.executeUpdate();
 			if (updateCount == 1) {
-				sql = "DELETE FROM film_actor WHERE film_id = ?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, filmId);
-				stmt.executeUpdate();
-				sql = "INSERT INTO film_actor (film_id, actor_id) VALUES (?,?)";
-				stmt = conn.prepareStatement(sql);
-				for (Actor actor : updatedFilm.getActors()) {
-					stmt.setInt(1, filmId);
-					stmt.setInt(2, actor.getId());
-					stmt.executeUpdate();
-				}
+				System.out.println("update successful");
+				//sql = "DELETE FROM film_actor WHERE film_id = ?";
+//				stmt = conn.prepareStatement(sql);
+//				stmt.setInt(1, filmId);
+//				stmt.executeUpdate();
+//				sql = "INSERT INTO film_actor (film_id, actor_id) VALUES (?,?)";
+//				stmt = conn.prepareStatement(sql);
+//				for (Actor actor : updatedFilm.getActors()) {
+//					stmt.setInt(1, filmId);
+//					stmt.setInt(2, actor.getId());
+//					stmt.executeUpdate();
 				conn.commit();
+				filmToReturn = updatedFilm;
 			}
+			else {
+				System.out.println("update failed **********");
+			}
+				
+			//}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 			if (conn != null) {
@@ -252,9 +261,8 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 					System.err.println("Error trying to rollback");
 				}
 			}
-			return false;
 		}
-		return true;
+		return filmToReturn;
 	}
 
 	// this creates and adds a film from a Film object

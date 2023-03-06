@@ -75,8 +75,25 @@ class FilmTest {
 	
 	@Test
 	@DisplayName("Update film in database")
-	void test_updateFilm() {
-		fail("Not yet implemented");
+	void test_updateFilm() throws SQLException {
+	
+		Film test = new Film();
+		test.setTitle("HARDLY NOOBING");
+		test.setDescription("a bunch of noobs on a train");
+		test.setFeatures("Trailers,Commentaries");
+		test.setRating("PG");
+		test.setLanguageId(1);
+		test.setLength(90);
+		test.setReleaseYear(2020);
+		test.setRentalDuration(3);
+		test.setRentalRate(3.99);
+		test.setReplacementCost(19.89);
+		test.setId(1004);
+		
+		Film updatedFilm = filmDAO.updateFilm(1004, test);
+		
+		assertEquals("HARDLY NOOBING",filmDAO.findFilmById(1004).getTitle());
+	
 	}
 	
 	@Test
